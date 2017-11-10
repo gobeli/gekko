@@ -1,11 +1,12 @@
 version: '3'
 services:
   gekko:
-    restart: always
+    # restart: always
     build: ./
     volumes:
       - ./volumes/gekko/history:/usr/src/app/history
       - ./config.js:/usr/src/app/config.js
+      - ./strategies:/usr/src/app/strategies
     links:
       - redis
 #      - postgresql
