@@ -7,6 +7,7 @@ services:
       - ./volumes/gekko/history:/usr/src/app/history
       - ./config.js:/usr/src/app/config.js
       - ./strategies:/usr/src/app/strategies
+      - ./test:/usr/src/app/test
     links:
       - redis
 #      - postgresql

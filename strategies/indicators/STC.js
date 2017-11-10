@@ -16,12 +16,12 @@ Indicator.prototype.update = function(price) {
   const m = this.MACD.diff;
   const v1 = Math.min(m, this.length);
   const v2 = Math.max(m, this.length) - v1;
-  const f1 = (v2 > 0 ? ((m - v1) / v2) * 100 : this.last.f1);
-  const pf = (this.last.pf ? f1 : this.last.pf + (this.factor * (f1 - this.last.pf))) ;
-  const v3 = Math.min(pf, length);
-  const v4 = Math.max(pf, length) - v3;
-  const f2 = (v4 > 0 ? ((pf - v3) / v4) * 100 : this.last.f2);
-  this.result = this.last.pff ? f2 : this.last.pff + (this.factor * (f2 - this.last.pff));
+  const f1 = v2 > 0 ? ((m - v1) / v2) * 100 : this.last.f1;
+  const pf = !this.last.pf ? f1 : this.last.pf + (this.factor * (f1 - this.last.pf));
+  const v3 = Math.min(pf, this.length);
+  const v4 = Math.max(pf, this.length) - v3;
+  const f2 = v4 > 0 ? ((pf - v3) / v4) * 100 : this.last.f2;
+  this.result = !this.last.pff ? f2 : this.last.pff + (this.factor * (f2 - this.last.pff));
   this.last = { f1, f2, pf, pff: this.result };
 }
 

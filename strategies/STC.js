@@ -15,6 +15,7 @@ var strat = {};
 
 // Prepare everything our method needs
 strat.init = function() {
+  this.requiredHistory = this.tradingAdvisor.historySize;
   this.addIndicator('stc', 'STC', this.settings);
 }
 
@@ -26,19 +27,20 @@ strat.update = function(candle) {
 strat.log = function() {
   const stc = this.indicators.stc;
   log.debug('STC:');
-  log.debug('\t', stc.result);
+  log.debug('\t', stc.result, this.requiredHistory);
 }
 
 // Based on the newly calculated
 // information, check if we should
 // update or not.
 strat.check = function() {
-
   // Only continue if we have a new update.
-  if(this.indicators.stc.result > 10)
-    this.advice('long');
+  if (this.indicators.stc.result > 10 && this.indicators.stc.result < 95)
+    this.advice();
   else if (this.indicators.stc.result < 95)
     this.advice('short');
+  else if (this.indicators.stc.result > 10)
+    this.advice('long');
 
 }
 

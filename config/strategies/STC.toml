@@ -1,0 +1,4 @@
+length = 9
+fastLength = 9
+slowLength = 30
+factor = 0.5
