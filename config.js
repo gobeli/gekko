@@ -171,6 +171,8 @@ config.STC = {
   fastLength: 23,
   slowLength: 50,
   factor: 0.5,
+  crossOver: 10,
+  crossUnder: 95,
   takeProfit: 0,
   stopLoss: 0,
   trailStop: 0,

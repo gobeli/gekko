@@ -27,7 +27,7 @@ strat.update = function(candle) {
 strat.log = function() {
   const stc = this.indicators.stc;
   log.debug('STC:');
-  log.debug('\t', stc.result, this.requiredHistory);
+  log.debug('\t', stc.result, this.settings.crossOver, this.settings.crossUnder);
 }
 
 // Based on the newly calculated
@@ -35,11 +35,13 @@ strat.log = function() {
 // update or not.
 strat.check = function() {
   // Only continue if we have a new update.
-  if (this.indicators.stc.result > 10 && this.indicators.stc.result < 95)
+  const crossOver = this.indicators.stc.result > this.settings.crossOver;
+  const crossUnder = this.indicators.stc.result < this.settings.crossUnder;
+  if (crossOver && crossUnder)
     this.advice();
-  else if (this.indicators.stc.result < 95)
+  else if (crossUnder)
     this.advice('short');
-  else if (this.indicators.stc.result > 10)
+  else if (crossOver)
     this.advice('long');
 
 }

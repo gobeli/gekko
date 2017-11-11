@@ -2,3 +2,5 @@ length = 9
 fastLength = 9
 slowLength = 30
 factor = 0.5
+crossOver = 10
+crossUnder = 95
