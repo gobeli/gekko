@@ -180,6 +180,21 @@ config.STC = {
 };
 
 
+config['gannswing'] = {
+  // stop-loss
+  stoploss: {
+    // enable/disable stop loss sells
+    enabled: false,
+    // if stop-loss is enabled, shall it be trailing?
+    trailing: false,
+    // how many percent before we trigger stop-loss sell?
+    percent: 5
+  },
+  vixperiod: 20,
+  // trend reaction time between 50 and 250
+  swingperiod: 250
+}
+
 // custom settings:
 config.custom = {
   my_custom_setting: 10,

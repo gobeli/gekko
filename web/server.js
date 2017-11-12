@@ -1,5 +1,5 @@
 const config = require('./vue/UIconfig');
-
+const auth = require('koa-basic-auth');
 const koa = require('koa');
 const serve = require('koa-static');
 const cors = require('koa-cors');
@@ -69,11 +69,26 @@ router.post('/api/getCandles', require(ROUTE('getCandles')));
 //   ws.on('message', _.noop);
 // });
 
+app.use(function *(next){
+  try {
+    yield next;
+  } catch (err) {
+    if (401 == err.status) {
+      this.status = 401;
+      this.set('WWW-Authenticate', 'Basic');
+      this.body = 'cant haz that';
+    } else {
+      throw err;
+    }
+  }
+});
+
 app
   .use(cors())
-  .use(serve(WEBROOT + 'vue'))
   .use(bodyParser())
   .use(require('koa-logger')())
+  .use(auth({ name: 'admin', pass: process.env.BASIC_AUTH_PASSWORD  }))
+  .use(serve(WEBROOT + 'vue'))
   .use(router.routes())
   .use(router.allowedMethods());
 

@@ -14,6 +14,7 @@ services:
     environment:
      - HOST
      - PORT
+     - BASIC_AUTH_PASSWORD
     ports: # you can comment this out when using the nginx frontend
       - "${PORT}:${PORT}"
 ## optionally set nginx vars if you wish to frontend it with nginx
