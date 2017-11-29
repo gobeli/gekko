@@ -47,55 +47,6 @@ if(config.tradingAdvisor.tulind.enabled) {
 
 var indicatorsPath = dirs.methods + 'indicators/';
 
-<<<<<<< HEAD
-var Indicators = {
-  MACD: {
-    factory: require(indicatorsPath + 'MACD'),
-    input: 'price'
-  },
-  EMA: {
-    factory: require(indicatorsPath + 'EMA'),
-    input: 'price'
-  },
-  DEMA: {
-    factory: require(indicatorsPath + 'DEMA'),
-    input: 'price'
-  },
-  PPO: {
-    factory: require(indicatorsPath + 'PPO'),
-    input: 'price'
-  },
-  LRC: {
-    factory: require(indicatorsPath + 'LRC'),
-    input: 'price'
-  },
-  SMA: {
-    factory: require(indicatorsPath + 'SMA'),
-    input: 'price'
-  },
-
-  RSI: {
-    factory: require(indicatorsPath + 'RSI'),
-    input: 'candle'
-  },
-  TSI: {
-    factory: require(indicatorsPath + 'TSI'),
-    input: 'candle'
-  },
-  UO: {
-    factory: require(indicatorsPath + 'UO'),
-    input: 'candle'
-  },
-  CCI: {
-    factory: require(indicatorsPath + 'CCI'),
-    input: 'candle'
-  },
-  STC: {
-    factory: require(indicatorsPath + 'STC'),
-    input: 'price'
-  }
-};
-=======
 var indicatorFiles = fs.readdirSync(indicatorsPath);
 var Indicators = {};
 
@@ -108,7 +59,6 @@ _.each(indicatorFiles, function(indicator) {
       log.error("Failed to load indicator", indicatorName);
     }
 });
->>>>>>> c86ce48d539a5f45cab2f2b14b59743ccccb8719
 
 var allowedIndicators = _.keys(Indicators);
 var allowedTalibIndicators = _.keys(talib);
