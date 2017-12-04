@@ -21,7 +21,7 @@ strat.init = function() {
 	this.lastCrossUnder = true;
 	this.candleTime = null;
 	this.requiredHistory = this.tradingAdvisor.historySize;
-	this.addIndicator('stc', 'STC', this.settings);
+  this.addIndicator('stc', 'STC', this.settings);
 }
 
 // What happens on every new candle?
@@ -39,8 +39,7 @@ strat.update = function(candle) {
 // For debugging purposes.
 strat.log = function() {
 	if (this.i === 0) {
-		const
-		stc = this.indicators.stc;
+		const stc = this.indicators.stc;
 		log.debug('STC:');
 		log.debug('\t', this.candleTime, this.candlePrice, stc.result,
 				this.settings.crossOver, this.settings.crossUnder);
@@ -53,12 +52,9 @@ strat.log = function() {
 strat.check = function() {
 	// Only continue if we have a new update.
 	if (this.i === 0) {
-		const
-		result = this.indicators.stc.result;
-		const
-		crossOver = result > this.settings.crossOver;
-		const
-		crossUnder = result < this.settings.crossUnder;
+		const result = this.indicators.stc.result;
+		const crossOver = result > this.settings.crossOver;
+		const crossUnder = result < this.settings.crossUnder;
 		if ((crossUnder && !this.lastCrossUnder)
 				|| ( this.currentAdvice !== 'short' && result < this.settings.crossOver)) {
 			this.currentAdvice = 'short';
