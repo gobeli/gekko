@@ -24,8 +24,8 @@ describe.only('indicators/STC', function() {
   var STC = require(INDICATOR_PATH + 'STC');
   it('should correctly calculate STCs', function() {
     var stc = new STC({ length: 9,
-      fastLength: 23,
-      slowLength: 50,
+      fastLength: 9,
+      slowLength: 10,
       factor: 0.5 });
     _.each(prices, function(p, i) {
       stc.update(p);

@@ -156,8 +156,11 @@ Manager.prototype.trade = function(what, retry) {
     var amount, price;
 
     if(what === 'BUY') {
-
-      amount = this.getBalance(this.currency) / this.ticker.ask;
+      var balance = this.getBalance(this.currency);
+      if( balance > this.conf.maxBuyAmount){
+    	  balance = this.conf.maxBuyAmount;
+      }
+      amount = balance / this.ticker.ask;
       if(amount > 0){
           price = this.ticker.bid;
           this.buy(amount, price);

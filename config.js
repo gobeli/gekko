@@ -16,9 +16,9 @@ config.debug = true; // for additional logging / debugging
 config.watch = {
 
   // see https://gekko.wizb.it/docs/introduction/supported_exchanges.html
-  exchange: 'poloniex',
-  currency: 'USDT',
-  asset: 'BTC',
+  exchange: 'bitfinex',
+  currency: 'BTC',
+  asset: 'DSH',
 
   // You can set your own tickrate (refresh rate).
   // If you don't set it, the defaults are 2 sec for
@@ -32,10 +32,10 @@ config.watch = {
 
 config.tradingAdvisor = {
   enabled: true,
-  method: 'MACD',
+  method: 'STC',
   candleSize: 1,
-  historySize: 3,
-  adapter: 'sqlite',
+  historySize: 10,
+  adapter: 'mongodb',
   talib: {
     enabled: false,
     version: '1.0.2'
@@ -171,16 +171,16 @@ config.StochRSI = {
 };
 
 config.STC = {
-  length: 9,
+  length: 10,
+  candleSize: 240,
   fastLength: 23,
   slowLength: 50,
   factor: 0.5,
-  crossOver: 10,
-  crossUnder: 95,
+  crossOver: 20,
+  crossUnder: 80,
   takeProfit: 0,
-  stopLoss: 0,
-  trailStop: 0,
-  trailOffset: 0
+  stopLoss: 5,
+  trailOffset: 7
 };
 
 
@@ -188,9 +188,9 @@ config['gannswing'] = {
   // stop-loss
   stoploss: {
     // enable/disable stop loss sells
-    enabled: false,
+    enabled: true,
     // if stop-loss is enabled, shall it be trailing?
-    trailing: false,
+    trailing: true,
     // how many percent before we trigger stop-loss sell?
     percent: 5
   },
@@ -228,11 +228,11 @@ config.paperTrader = {
   // start balance, on what the current balance is compared with
   simulationBalance: {
     // these are in the unit types configured in the watcher.
-    asset: 1,
-    currency: 100,
+    asset: 0,
+    currency: 0.05,
   },
   // how much fee in % does each trade cost?
-  feeMaker: 0.15,
+  feeMaker: 0.25,
   feeTaker: 0.25,
   feeUsing: 'maker',
   // how much slippage/spread should Gekko assume per trade?
@@ -249,8 +249,9 @@ config.performanceAnalyzer = {
 // watched by `config.watch`.
 config.trader = {
   enabled: false,
-  key: '',
-  secret: '',
+  maxBuyAmount: 0.05,
+  key: 'e3a70201e9a44141876dc5b8f85cd95a',
+  secret: 'ea3a84b391754c1e9bf595b4158d7e7d',
   username: '', // your username, only required for specific exchanges.
   passphrase: '' // GDAX, requires a passphrase.
 }
@@ -406,7 +407,7 @@ config.ifttt = {
 }
 
 config.candleWriter = {
-  enabled: false
+  enabled: true
 }
 
 config.adviceWriter = {
@@ -418,7 +419,7 @@ config.adviceWriter = {
 //                       CONFIGURING ADAPTER
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-config.adapter = 'sqlite';
+config.adapter = 'mongodb';
 
 config.sqlite = {
   path: 'plugins/sqlite',
@@ -448,7 +449,7 @@ config.postgresql = {
 config.mongodb = {
   path: 'plugins/mongodb',
   version: 0.1,
-  connectionString: 'mongodb://mongodb/gekko', // connection to mongodb server
+  connectionString: 'mongodb://localhost/gekko', // connection to mongodb server
   dependencies: [{
     module: 'mongojs',
     version: '2.4.0'
@@ -463,7 +464,11 @@ config.mongodb = {
 // @link: https://gekko.wizb.it/docs/commandline/backtesting.html
 
 config.backtest = {
-  daterange: 'scan',
+  daterange: {
+	    // NOTE: these dates are in UTC
+	    from: "2017-07-15 01:00:00",
+	    to: "2017-11-30 00:00:00",
+	  },
   batchSize: 50
 }
 
@@ -474,7 +479,8 @@ config.backtest = {
 config.importer = {
   daterange: {
     // NOTE: these dates are in UTC
-    from: "2016-01-01 00:00:00"
+    from: "2017-10-01 00:00:00",
+    to: "2017-10-03 00:00:00"
   }
 }
 
@@ -489,6 +495,6 @@ config.importer = {
 // understand this.
 //
 // Not sure? Read this first: https://github.com/askmike/gekko/issues/201
-config['I understand that Gekko only automates MY OWN trading strategies'] = false;
+config['I understand that Gekko only automates MY OWN trading strategies'] = true;
 
 module.exports = config;
