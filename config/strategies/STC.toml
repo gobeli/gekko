@@ -1,5 +1,4 @@
 length = 10
-candleSize = 240
 fastLength = 23
 slowLength = 50
 factor = 0.5
