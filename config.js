@@ -183,6 +183,12 @@ config.STC = {
   trailOffset: 7
 };
 
+config.High = {
+  hours: 24,
+  stopLoss: 5,
+  takeProfit: 5
+};
+
 
 config['gannswing'] = {
   // stop-loss
