@@ -186,7 +186,8 @@ config.STC = {
 config.High = {
   hours: 24,
   stopLoss: 5,
-  takeProfit: 5
+  takeProfit: 5,
+  trailingStop: 0
 };
 
 

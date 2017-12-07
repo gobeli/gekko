@@ -7,6 +7,7 @@ strat.init = function() {
   this.history = [];
   this.currentAdvice = '';
   this.buyPrice = 0;
+  this.trailingStop = 0;
 }
 
 strat.update = function (candle) {
@@ -32,14 +33,21 @@ strat.check = function() {
     return;
   }
   if (this.max() === currentCandle.close) {
-    log.debug('Long that shit');
     this.currentAdvice = 'long';
     this.buyPrice = currentCandle.close;
     this.advice('long');
   }
   if (this.currentAdvice === 'long') {
     const profit = 100 - (currentCandle.close * 100) / this.buyPrice;
-    console.log(profit);
+    if (this.settings.trailingStop) {
+      const trailingStop = currentCandle.close - (currentCandle.close * (this.settings.trailingStop / 100));
+      if (trailingStop > this.trailingStop) {
+        this.trailingStop = trailingStop;
+      }
+      if (currentCandle.close < this.trailingStop) {
+        this.advice('short');
+      }
+    }
     if (profit > this.settings.takeProfit || profit < -this.settings.stopLoss) {
       this.advice('short');
       this.currentAdvice = 'short';
