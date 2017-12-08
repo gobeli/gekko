@@ -21,7 +21,7 @@ strat.max = function() {
 }
 
 strat.log = function() {
-  log.debug(`${this.settings.hours} High:`);
+  log.debug(`${this.settings.hours}h High:`);
   log.debug('\t', this.max());
 }
 
@@ -36,8 +36,7 @@ strat.check = function() {
     this.currentAdvice = 'long';
     this.buyPrice = currentCandle.close;
     this.advice('long');
-  }
-  if (this.currentAdvice === 'long') {
+  } else if (this.currentAdvice === 'long') {
     const profit = 100 - (currentCandle.close * 100) / this.buyPrice;
     if (this.settings.trailingStop) {
       const trailingStop = currentCandle.close - (currentCandle.close * (this.settings.trailingStop / 100));
@@ -46,9 +45,11 @@ strat.check = function() {
       }
       if (currentCandle.close < this.trailingStop) {
         this.advice('short');
+        this.trailingStop = 0;
       }
     }
-    if (profit > this.settings.takeProfit || profit < -this.settings.stopLoss) {
+    if ((this.settings.takeProfit && profit > this.settings.takeProfit) 
+      || (this.settings.stopLoss && profit < -this.settings.stopLoss)) {
       this.advice('short');
       this.currentAdvice = 'short';
     }
